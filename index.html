@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+</head>
+
+<body>
+
+  <p>Первая нейросеть, обученная на файле 2мб, 5 эпох (обучалась 0.5 часа)</p>
+
+  <p>Введите требуему длину сгенерированного текста:</p>
+  <p><input id="first_length" type="number" name="num" min="1" value="20"></p>
+  <button onclick="first_generate()">Gen!</button>
+  <br>Сгенеренный текст: <p id="first_result">*туть будет результат*</p>
+
+  <br>
+  <br>
+  <br>
+
+  <p>Вторая нейросеть, обученная на файле 2мб, 50 эпох (обучалась 2 часа)</p>
+
+  <p>Введите требуему длину сгенерированного текста:</p>
+  <p><input id="second_length" type="number" name="num" min="1" value="20"></p>
+  <button onclick="second_generate()">Gen!</button>
+  <br>Сгенеренный текст: <p id="second_result">*туть будет результат*</p>
+
+  <br>
+  <br>
+  <br>
+
+  <p>Третья нейросеть, обученная на файле 20мб, 1 эпоха (обучалась 15 часов)</p>
+
+  <p>Введите требуему длину сгенерированного текста:</p>
+  <p><input id="third_length" type="number" name="num" min="1" value="20"></p>
+  <button onclick="third_generate()">Gen!</button>
+  <br>Сгенеренный текст: <p id="third_result">*туть будет результат*</p>
+
+  <script>
+    // Create the character level generator with a pre trained model
+    const first = ml5.charRNN('models/da', modelLoaded);
+    const second = ml5.charRNN('models/dat', modelLoaded);
+    const third = ml5.charRNN('models/d', modelLoaded);
+
+    // When the model is loaded
+    function modelLoaded() {
+      console.log('Model Loaded!');
+    }
+
+    // Generate content
+    function first_generate() {
+      const length = document.getElementById("first_length").value;
+      first.generate({ length, }, (err, results) => {
+        document.getElementById("first_result").innerText = results.sample;
+        console.log(results);
+      });
+    }
+
+    function second_generate() {
+      const length = document.getElementById("second_length").value;
+      second.generate({ length, }, (err, results) => {
+        document.getElementById("second_result").innerText = results.sample;
+        console.log(results);
+      });
+    }
+
+    function third_generate() {
+      const length = document.getElementById("third_length").value;
+      second.generate({ length, }, (err, results) => {
+        document.getElementById("third_result").innerText = results.sample;
+        console.log(results);
+      });
+    }
+
+  </script>
+</body>
+
+</html>
